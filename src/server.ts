@@ -5,8 +5,16 @@ import config from "./config";
 
 const app = express()
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    console.log("Welcome to library management system");
+    res.send({
+        success: true,
+        message: "Welcome to library management system"
+    });
+})
 
 app.listen(config.port, ()=> {
     console.log(`😎 Server is running.`);
