@@ -7,12 +7,12 @@ import {
   deleteUser,
 } from "./user.controller";
 
-const userRoute = Router();
+const userRoutes = Router();
 
-userRoute.post("/user", registerUser);
-userRoute.get("/users", getUsers);
-userRoute.get("/user/:id", getUserById);
-userRoute.patch("/user/:id", updateUser);
-userRoute.delete("/user/:id", deleteUser);
+userRoutes.post("/user", registerUser);
+userRoutes.get("/users", getUsers);
+userRoutes.get("/user/:id", getUserById);
+userRoutes.patch("/user/:id", updateUser);
+userRoutes.delete("/user/:id", deleteUser);
 
-export default userRoute;
+export default userRoutes;

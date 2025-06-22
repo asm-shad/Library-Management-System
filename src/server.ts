@@ -3,7 +3,8 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import config from "./config";
-import userRoute from "./modules/user/user.route";
+import userRoutes from "./modules/user/user.route";
+import bookRoutes from "./modules/book/book.route";
 
 const app = express();
 
@@ -11,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // Mount user routes under /api
-app.use("/api", userRoute);
+app.use("/api", userRoutes);
+app.use("/api", bookRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
