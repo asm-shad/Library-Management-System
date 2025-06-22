@@ -1,14 +1,17 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import config from "./config";
+import userRoute from "./modules/user/user.route";
 
-const app = express()
+const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.use(userRoute);
+
+app.get("/", (req: Request, res: Response) => {
     console.log("Welcome to library management system");
     res.send({
         success: true,
