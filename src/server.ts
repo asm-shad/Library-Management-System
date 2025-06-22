@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import config from "./config";
 import userRoutes from "./modules/user/user.route";
 import bookRoutes from "./modules/book/book.route";
+import borrowRoutes from "./modules/borrow/borrow.route";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 // Mount user routes under /api
 app.use("/api", userRoutes);
 app.use("/api", bookRoutes);
+app.use("/api", borrowRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send({

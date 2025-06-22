@@ -45,19 +45,19 @@ const getUserById = async (req: Request, res: Response) => {
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(404).send({
+      res.status(404).json({
         success: false,
         message: "User not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User retrieved successfully",
+        data: user,
+      });
     }
-
-    res.send({
-      success: true,
-      message: "User retrieved successfully",
-      data: user,
-    });
   } catch (error: any) {
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: "Failed to retrieve user",
       error: error.message,
@@ -65,6 +65,8 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+
+// ✅ Update User
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -76,19 +78,19 @@ const updateUser = async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res.status(404).send({
+      res.status(404).json({
         success: false,
         message: "User not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User updated successfully",
+        data: user,
+      });
     }
-
-    res.send({
-      success: true,
-      message: "User updated successfully",
-      data: user,
-    });
   } catch (error: any) {
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: "Failed to update user",
       error: error.message,
@@ -96,6 +98,7 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+// ✅ Delete User
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -103,19 +106,19 @@ const deleteUser = async (req: Request, res: Response) => {
     const user = await User.findByIdAndDelete(id);
 
     if (!user) {
-      return res.status(404).send({
+      res.status(404).json({
         success: false,
         message: "User not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+        data: null,
+      });
     }
-
-    res.send({
-      success: true,
-      message: "User deleted successfully",
-      data: user,
-    });
   } catch (error: any) {
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: "Failed to delete user",
       error: error.message,

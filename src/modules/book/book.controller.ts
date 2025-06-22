@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { Book } from "./book.model";
 
-// Create Book
-export const createBook = async (req: Request, res: Response) => {
+// ✅ Create Book
+const createBook = async (req: Request, res: Response) => {
   try {
     const book = new Book(req.body);
     const result = await book.save();
+
     res.status(201).json({
       success: true,
       message: "Book created successfully",
@@ -15,16 +16,16 @@ export const createBook = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Book creation failed",
-      error: error,
+      error: error.message,
     });
   }
 };
 
-// Get All Books with filtering/sorting
-export const getBooks = async (req: Request, res: Response) => {
+// ✅ Get All Books with filtering/sorting
+const getBooks = async (req: Request, res: Response) => {
   try {
     const filter = req.query.filter as string;
-    const sortBy = req.query.sortBy as string || "createdAt";
+    const sortBy = (req.query.sortBy as string) || "createdAt";
     const sortOrder = req.query.sort === "asc" ? 1 : -1;
     const limit = parseInt(req.query.limit as string) || 10;
 
@@ -35,7 +36,7 @@ export const getBooks = async (req: Request, res: Response) => {
       .sort({ [sortBy]: sortOrder })
       .limit(limit);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
       data,
@@ -49,21 +50,23 @@ export const getBooks = async (req: Request, res: Response) => {
   }
 };
 
-// Get Book by ID
-export const getBookById = async (req: Request, res: Response) => {
+// ✅ Get Book by ID
+const getBookById = async (req: Request, res: Response) => {
   try {
     const book = await Book.findById(req.params.bookId);
+
     if (!book) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Book retrieved successfully",
+        data: book,
+      });
     }
-    res.json({
-      success: true,
-      message: "Book retrieved successfully",
-      data: book,
-    });
   } catch (error: any) {
     res.status(400).json({
       success: false,
@@ -73,25 +76,26 @@ export const getBookById = async (req: Request, res: Response) => {
   }
 };
 
-// Update Book
-export const updateBook = async (req: Request, res: Response) => {
+// ✅ Update Book
+const updateBook = async (req: Request, res: Response) => {
   try {
-    const updated = await Book.findByIdAndUpdate(
-      req.params.bookId,
-      req.body,
-      { new: true, runValidators: true }
-    );
+    const updated = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
     if (!updated) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Book updated successfully",
+        data: updated,
+      });
     }
-    res.json({
-      success: true,
-      message: "Book updated successfully",
-      data: updated,
-    });
   } catch (error: any) {
     res.status(400).json({
       success: false,
@@ -101,21 +105,23 @@ export const updateBook = async (req: Request, res: Response) => {
   }
 };
 
-// Delete Book
-export const deleteBook = async (req: Request, res: Response) => {
+// ✅ Delete Book
+const deleteBook = async (req: Request, res: Response) => {
   try {
     const deleted = await Book.findByIdAndDelete(req.params.bookId);
+
     if (!deleted) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Book deleted successfully",
+        data: null,
+      });
     }
-    res.json({
-      success: true,
-      message: "Book deleted successfully",
-      data: null,
-    });
   } catch (error: any) {
     res.status(400).json({
       success: false,
@@ -124,3 +130,11 @@ export const deleteBook = async (req: Request, res: Response) => {
     });
   }
 };
+
+export {
+    createBook,
+    getBooks,
+    getBookById,
+    updateBook,
+    deleteBook
+}
