@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Book } from "./book.model";
 
-// ✅ Create Book
+// Create Book
 const createBook = async (req: Request, res: Response) => {
   try {
     const book = new Book(req.body);
@@ -15,7 +15,7 @@ const createBook = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: "Book creation failed",
+      message: "Validation failed",
       error: error.message,
     });
   }
