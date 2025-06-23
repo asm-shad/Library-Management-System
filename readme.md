@@ -27,7 +27,7 @@ A backend RESTful API for managing books and borrow operations in a library. Bui
 ---
 
 ## 📁 Project Structure
-
+```
 src/
 ├── app.ts                  # Express app setup
 ├── server.ts               # App entry point
@@ -53,7 +53,7 @@ src/
 │ │   └── user.routes.ts        # User route definitions
 │
 └── ...
-
+```
 
 
 ## ⚙️ Project Setup Instructions
