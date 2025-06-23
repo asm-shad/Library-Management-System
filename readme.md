@@ -29,59 +29,57 @@ A backend RESTful API for managing books and borrow operations in a library. Bui
 ## 📁 Project Structure
 
 src/
-├── app.ts # Express app setup
-├── server.ts # App entry point
+├── app.ts                  # Express app setup
+├── server.ts               # App entry point
+
 ├── modules/
-│ ├── book/ # Book feature (CRUD + filter/sort)
-│ │ ├── book.model.ts
-│ │ ├── book.interface.ts
-│ │ ├── book.controller.ts
-│ │ └── book.routes.ts
 │
-│ ├── borrow/ # Borrowing logic (business rules + aggregation)
-│ │ ├── borrow.model.ts
-│ │ ├── borrow.interface.ts
-│ │ ├── borrow.controller.ts
-│ │ └── borrow.routes.ts
+│ ├── book/                 # 📚 Book feature (CRUD + filter/sort)
+│ │   ├── book.model.ts         # Book schema/model
+│ │   ├── book.interface.ts     # TypeScript interface for Book
+│ │   ├── book.controller.ts    # Book controller logic
+│ │   └── book.routes.ts        # Book route definitions
 │
-│ ├── user/ # User management (optional feature)
-│ │ ├── user.model.ts
-│ │ ├── user.interface.ts
-│ │ ├── user.controller.ts
-│ │ └── user.routes.ts
+│ ├── borrow/               # 📦 Borrowing logic (business rules + aggregation)
+│ │   ├── borrow.model.ts       # Borrow schema/model
+│ │   ├── borrow.interface.ts   # TypeScript interface for Borrow
+│ │   ├── borrow.controller.ts  # Borrow controller logic
+│ │   └── borrow.routes.ts      # Borrow route definitions
+│
+│ ├── user/                 # 👤 User management (optional feature)
+│ │   ├── user.model.ts         # User schema/model
+│ │   ├── user.interface.ts     # TypeScript interface for User
+│ │   ├── user.controller.ts    # User controller logic
+│ │   └── user.routes.ts        # User route definitions
 │
 └── ...
+```
 
 
 ---
 
 ## ⚙️ Setup Instructions
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/library-management-api.git
-   cd library-management-api
-Install dependencies
+## 🧪 Build & Run
 
-npm install
-Create a .env file
-
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/library-db
-Run the server
-
-# Development mode
-npm run dev
-
-# Production build
+```bash
 npm run build && npm start
-📘 API Endpoints
-📚 Books
-➕ Create Book
+```
 
-POST /api/books
-Request Body
+---
 
+## 📘 API Endpoints
+
+---
+
+### 📚 Books
+
+#### ➕ Create Book
+
+**POST** `/api/books`
+
+**Request Body**
+```json
 {
   "title": "The Theory of Everything",
   "author": "Stephen Hawking",
@@ -91,101 +89,129 @@ Request Body
   "copies": 5,
   "available": true
 }
-Response
+```
 
+**Response**
+```json
 {
   "success": true,
   "message": "Book created successfully",
   "data": { ... }
 }
-📖 Get All Books
+```
 
-GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
-Query Parameters
+---
 
-filter: Filter by genre
+#### 📖 Get All Books
 
-sortBy: Field to sort (e.g., createdAt)
+**GET** `/api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5`
 
-sort: asc or desc
+**Query Parameters**
+- `filter`: Filter by genre  
+- `sortBy`: Field to sort (e.g., `createdAt`)  
+- `sort`: `asc` or `desc`  
+- `limit`: Number of results (default: `10`)
 
-limit: Number of results (default: 10)
-
-Response
-
+**Response**
+```json
 {
   "success": true,
   "message": "Books retrieved successfully",
   "data": [ ... ]
 }
-🔍 Get Book by ID
+```
 
-GET /api/books/:bookId
-Response
+---
 
+#### 🔍 Get Book by ID
+
+**GET** `/api/books/:bookId`
+
+**Response**
+```json
 {
   "success": true,
   "message": "Book retrieved successfully",
   "data": { ... }
 }
-✏️ Update Book
+```
 
-PUT /api/books/:bookId
-Request Body
+---
 
+#### ✏️ Update Book
+
+**PUT** `/api/books/:bookId`
+
+**Request Body**
+```json
 {
   "copies": 50
 }
-Response
+```
 
+**Response**
+```json
 {
   "success": true,
   "message": "Book updated successfully",
   "data": { ... }
 }
-❌ Delete Book
+```
 
-DELETE /api/books/:bookId
-Response
+---
 
+#### ❌ Delete Book
+
+**DELETE** `/api/books/:bookId`
+
+**Response**
+```json
 {
   "success": true,
   "message": "Book deleted successfully",
   "data": null
 }
-📦 Borrow
-✅ Borrow a Book
+```
 
-POST /api/borrow
-Business Logic
+---
 
-Checks if book has enough copies
+### 📦 Borrow
 
-Deducts quantity from copies
+#### ✅ Borrow a Book
 
-Updates available to false if copies become 0
+**POST** `/api/borrow`
 
-Request Body
+**Business Logic**
+- Checks if book has enough copies
+- Deducts quantity from `copies`
+- Updates `available` to `false` if copies become 0
 
+**Request Body**
+```json
 {
   "book": "BOOK_ID",
   "quantity": 2,
   "dueDate": "2025-07-18T00:00:00.000Z"
 }
-Response
+```
 
-
+**Response**
+```json
 {
   "success": true,
   "message": "Book borrowed successfully",
   "data": { ... }
 }
-📊 Borrow Summary (Aggregation)
+```
 
+---
 
-GET /api/borrow
-Response
+#### 📊 Borrow Summary (Aggregation)
 
+**GET** `/api/borrow`
+
+**Response**
+```json
 {
   "success": true,
   "message": "Borrowed books summary retrieved successfully",
@@ -206,10 +232,13 @@ Response
     }
   ]
 }
-❗ Error Response Format
-json
-Copy
-Edit
+```
+
+---
+
+### ❗ Error Response Format
+
+```json
 {
   "message": "Validation failed",
   "success": false,
@@ -226,21 +255,18 @@ Edit
     }
   }
 }
-✅ Project Completion Checklist
- Express + TypeScript setup
+```
 
- MongoDB + Mongoose integration
+---
 
- Book model with validation
+### ✅ Project Completion Checklist
 
- Borrow logic with business rules
-
- Aggregation summary
-
- Static methods / Middleware
-
- Query filtering and sorting
-
- Matching response formats
-
- Error structure conforms to spec
+- [x] Express + TypeScript setup
+- [x] MongoDB + Mongoose integration
+- [x] Book model with validation
+- [x] Borrow logic with business rules
+- [x] Aggregation summary
+- [x] Static methods / Middleware
+- [x] Query filtering and sorting
+- [x] Matching response formats
+- [x] Error structure conforms to spec
