@@ -21,7 +21,7 @@ const createBook = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Get All Books with filtering/sorting
+// Get All Books with filtering/sorting
 const getBooks = async (req: Request, res: Response) => {
   try {
     const filter = req.query.filter as string;
@@ -50,7 +50,7 @@ const getBooks = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Get Book by ID
+// Get one Book by ID
 const getBookById = async (req: Request, res: Response) => {
   try {
     const book = await Book.findById(req.params.bookId);
@@ -76,7 +76,7 @@ const getBookById = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Update Book
+// Update Book
 const updateBook = async (req: Request, res: Response) => {
   try {
     const updated = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
@@ -105,7 +105,7 @@ const updateBook = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Delete Book
+// Delete Book
 const deleteBook = async (req: Request, res: Response) => {
   try {
     const deleted = await Book.findByIdAndDelete(req.params.bookId);
