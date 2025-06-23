@@ -56,15 +56,46 @@ src/
 ```
 
 
----
+## ⚙️ Project Setup Instructions
 
-## ⚙️ Setup Instructions
-
-## 🧪 Build & Run
+1. **Initialize the project:**
 
 ```bash
-npm run build && npm start
+npm init -y
 ```
+
+2. **Initialize TypeScript:**
+
+```bash
+tsc --init
+```
+
+3. **Install dependencies:**
+
+```bash
+npm install express cors mongoose dotenv
+```
+
+4. **Install development dependencies:**
+
+```bash
+npm install --save-dev ts-node-dev @types/express @types/cors
+```
+
+5. **Update your `package.json` scripts:**
+
+```json
+"scripts": {
+  "start": "ts-node-dev --respawn --transpile-only ./src/server.ts"
+}
+```
+
+6. **Start the development server:**
+
+```bash
+npm run start
+```
+
 
 ---
 
